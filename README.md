@@ -15,6 +15,7 @@ The Program Takes the .docx File As Input And Provides a .ics File As Output.<br
 
 
 | Functions Inside tt_extract.py                                               |                                                                                                    |
+|-------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------|
 | `addevent(date, start_time, end_time, event_name, timezone)`                  | Adds an event to the calendar with specified date, start and end times, event name, and timezone.    |
 | `split_time(time)`                                                           | Splits a time range string into start and end times, handling different separators.                   |
 | `getdate(start_date, end_date, target_day)`                                 | Returns a list of dates between start_date and end_date that match the target_day.                    |
