@@ -6,14 +6,17 @@ You May Directly Run The Program If Your Computer Has Python `3.0` and Above alo
 The Program Takes the .docx File As Input And Provides a .ics File As Output.<br />
 - - - -
 
-# Behind The Scenes: <br />
+# Working: <br />
 
-The program takes the `path to .docx`, `start_date [YYYY-MM-DD]` and `end_date [YYYY-MM-DD]` as inputs and provides a `.ics` file as output.
-The program consists of the following functions:
-  splittimerange(time_range: str) -> This function is used to convert two time ranges in the given header such as `8:30AM - 9:30AM` into two return values `8:30am` and `9:30am`.
-  splittime(time_str: str) -> This function has the capability to convert the `raw string date` into a `datetime object`.
-  create_event(day, time_range, summary) -> This function creates the event along with its parameters so it can be appended into the `.ics` file.
-  main() -> It goes through the table in the word file, strips and splits the cells and creates the relevent events to be appended into the `.ics` file.
+The program takes the `path to .docx`, `timezone`, `start_date [YYYY-MM-DD]` and `end_date [YYYY-MM-DD]` as inputs and provides a `.ics` file as output.
+The program consists of the following:
+  `front.py`: Consists Of Tkinter Based Front End.
+  `tt_extract.py` - addevent(date, start_time, end_time, event_name, timezone) -> Adds an event to the calendar with specified date, start and end times, event name, and timezone.
+                  - split_time(time) -> Splits a time range string into start and end times, handling different separators.
+                  - getdate(start_date, end_date, target_day) -> Returns a list of dates between start_date and end_date that match the target_day.
+                  - table_extract(file_path) -> Extracts data from a Word document table, returning times and a dictionary of days with events.
+                  - calendar_create(timelist, daylist, sd, ed, timezone) -> Creates events based on the extracted table data for each specified day and time range.
+                  - final(document, sd, ed, timezone) -> Finalizes the process, extracting table data, creating events, and writing to the .ics file.
 - - - -
 
 # Note:
