@@ -32,3 +32,10 @@ Currently The Program Has Difficulty Reading Merged Cells, So If The Header Has 
 Also Please Make Sure That The Time Range In The Header Field Does Not Contain Space Between The `Raw Time Str[8:30]` and `am/pm` `Ex: 8:30am - 9:30am or 8:30am - 9:30pm`
 
 - - - -
+
+# Screenshots:
+
+<img width="579" alt="image" src="https://github.com/shyaaaaaaam/Word-ICS_Calendar/assets/66993859/13a13eeb-2948-4986-8d76-b0fbd533cab0">
+<img width="317" alt="image" src="https://github.com/shyaaaaaaam/Word-ICS_Calendar/assets/66993859/f6987a33-9696-405f-bc9f-9d68843af3cc">
+<img width="296" alt="image" src="https://github.com/shyaaaaaaam/Word-ICS_Calendar/assets/66993859/6dbf5ac6-bce3-4c6b-9566-bc4f714276ea">
+<img width="959" alt="image" src="https://github.com/shyaaaaaaam/Word-ICS_Calendar/assets/66993859/1bed5350-2b5b-4e18-b1a3-550b7ae016d2">
