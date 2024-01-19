@@ -8,15 +8,16 @@ The Program Takes the .docx File As Input And Provides a .ics File As Output.<br
 
 # Working: <br />
 
-The program takes the `path to .docx`, `timezone`, `start_date [YYYY-MM-DD]` and `end_date [YYYY-MM-DD]` as inputs and provides a `.ics` file as output.
-The program consists of the following:
-  `front.py`: Consists Of Tkinter Based Front End.
-  `tt_extract.py` - addevent(date, start_time, end_time, event_name, timezone) -> Adds an event to the calendar with specified date, start and end times, event name, and timezone.
-                  - split_time(time) -> Splits a time range string into start and end times, handling different separators.
-                  - getdate(start_date, end_date, target_day) -> Returns a list of dates between start_date and end_date that match the target_day.
-                  - table_extract(file_path) -> Extracts data from a Word document table, returning times and a dictionary of days with events.
-                  - calendar_create(timelist, daylist, sd, ed, timezone) -> Creates events based on the extracted table data for each specified day and time range.
-                  - final(document, sd, ed, timezone) -> Finalizes the process, extracting table data, creating events, and writing to the .ics file.
+| File                | Description                                                                                                                                                                 |
+|---------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `front.py`          | Consists of Tkinter-based Front End.                                                                                                                                       |
+| `tt_extract.py`     | - `addevent(date, start_time, end_time, event_name, timezone)`: Adds an event to the calendar with specified date, start and end times, event name, and timezone.        |
+|                     | - `split_time(time)`: Splits a time range string into start and end times, handling different separators.                                                                |
+|                     | - `getdate(start_date, end_date, target_day)`: Returns a list of dates between start_date and end_date that match the target_day.                                           |
+|                     | - `table_extract(file_path)`: Extracts data from a Word document table, returning times and a dictionary of days with events.                                              |
+|                     | - `calendar_create(timelist, daylist, sd, ed, timezone)`: Creates events based on the extracted table data for each specified day and time range.                            |
+|                     | - `final(document, sd, ed, timezone)`: Finalizes the process, extracting table data, creating events, and writing to the .ics file.                                            |
+
 - - - -
 
 # Note:
