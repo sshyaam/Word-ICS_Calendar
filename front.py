@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import filedialog, ttk, messagebox
 from tkcalendar import Calendar, DateEntry
 from tkinter.ttk import Checkbutton
+import webbrowser
 
 import datetime
 from datetime import datetime
@@ -104,7 +105,7 @@ repetition_var = tk.BooleanVar()
 repetition_check_label = tk.Label(root, text="Repetition Check", bg="sky blue")
 repetition_tooltip_label = tk.Label(root, text="?", font=("Helvetica", 8), bg="grey", fg="white")
 repetition_tooltip_label.bind("<Enter>", lambda e: show_tooltip(repetition_tooltip_label, "8:30AM - 9:00AM : Subject 1\n9:00AM - 10:00AM : Subject 1\n-> 8:30AM - 10:00AM : Subject 1"))
-repetition_check = Checkbutton(root, variable=repetition_var, onvalue=True, offvalue=False, state='disabled')
+repetition_check = Checkbutton(root, variable=repetition_var, onvalue=True, offvalue=False)
 repetition_check.grid(row=7, column=1, pady=5, sticky='w', padx=(5, 10), columnspan=2)
 repetition_check_label.grid(row=7, column=0, pady=5, padx=(10, 5), sticky='w')
 repetition_tooltip_label.grid(row=7, column=1, pady=5, sticky='w', padx=(28, 10))
@@ -122,7 +123,6 @@ start_date_label.grid(row=4, column=0, pady=5)
 start_date_cal.grid(row=4, column=1, pady=5)
 end_date_label.grid(row=5, column=0, pady=5)
 end_date_cal.grid(row=5, column=1, pady=5)
-download_button = tk.Button(root, text="Download", command=download_ics)
 
 logs_separator = ttk.Separator(root, orient=tk.HORIZONTAL)
 logs_separator.grid(row=9, column=0, columnspan=3, pady=(10, 5), sticky="ew")
@@ -140,5 +140,16 @@ root.grid_rowconfigure(10, weight=1)
 root.grid_columnconfigure(0, weight=1)
 
 download_button.grid(row=8, column=0, columnspan=3, pady=(20, 10))
+
+footer_frame = tk.Frame(root, bg="skyblue")
+footer_label = tk.Label(footer_frame, text="Made by shyaaaaaaam", fg="skyblue", cursor="hand2", bg="white")
+footer_label.bind("<Button-1>", lambda e: webbrowser.open_new("https://github.com/shyaaaaaaam/Word-ICS_Calendar"))
+footer_label.pack(pady=5)
+
+footer_frame.grid(row=11, column=0, columnspan=3, sticky="ew")
+
+root.grid_rowconfigure(11, weight=0)
+
+root.resizable(False,False)
 
 root.mainloop()
