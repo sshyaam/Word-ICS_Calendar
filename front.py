@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import filedialog, ttk, messagebox
 from tkcalendar import Calendar, DateEntry
+from tkinter.ttk import Checkbutton
+
 import datetime
 from datetime import datetime
 import pytz
@@ -24,12 +26,17 @@ def jumbledate(date):
     date_object = datetime.strptime(date, "%m/%d/%y")
     return date_object.strftime("%d/%m/%Y")
 
-def convert_to_ics(file_path, start_date, end_date, timezone):
-    reply = final(file_path, start_date, end_date, all_timezones_dict[timezone])
-    if (reply == "1"):
-        messagebox.showinfo("Success", ".icsfile Generated Successfully!")
+def convert_to_ics(file_path, start_date, end_date, timezone, repetition_check):
+    reply = final(file_path, start_date, end_date, all_timezones_dict[timezone], repetition_check)
+    if "Error: " not in reply:
+        logs_text.config(state=tk.NORMAL)
+        logs_text.insert(tk.END, f"{reply}\n\n")
+        logs_text.insert(tk.END, "Success: .ics file generated successfully!\n")
+        logs_text.config(state=tk.DISABLED)
     else:
-        messagebox.showerror("Error", reply)
+        logs_text.config(state=tk.NORMAL)
+        logs_text.insert(tk.END, f"{reply}\n")
+        logs_text.config(state=tk.DISABLED)
 
 def browse_file():
     file_path = filedialog.askopenfilename(filetypes=[("Word files", "*.docx")])
@@ -39,19 +46,44 @@ def browse_file():
 def on_start_date_change(event):
     end_date_cal['mindate'] = start_date_cal.get_date()
 
+def show_tooltip(widget, message):
+    x, y, _, _ = widget.bbox("insert")
+    x += widget.winfo_rootx() + 25
+    y += widget.winfo_rooty() + 25
+    tooltip_geometry = f"+{x}+{y}"
+    
+    tooltip = tk.Toplevel(widget)
+    tooltip.wm_overrideredirect(True)
+    tooltip.wm_geometry(tooltip_geometry)
+    
+    label = tk.Label(tooltip, text=message, background="#ffffe0", relief="solid", borderwidth=1)
+    label.pack(ipadx=1)
+
+    def close_tooltip(event=None):
+        tooltip.destroy()
+    
+    widget.bind("<Leave>", lambda e: close_tooltip())
+    tooltip.bind("<Button-1>", lambda e: close_tooltip())
+
 def download_ics():
     file_path = file_entry.get()
-    start_date = start_date_cal.get()
-    end_date = end_date_cal.get()
+    start_date = jumbledate(start_date_cal.get())
+    end_date = jumbledate(end_date_cal.get())
     timezone = timezone_options.get()
-    if not file_path:
-        messagebox.showerror("Error", "Please select a Word file.")
-        return
-    convert_to_ics(file_path, jumbledate(start_date), jumbledate(end_date), timezone)
+    repetition_check = repetition_var.get()
+    
+    tooltip_message = (
+        "8:30AM - 9:00AM : Subject 1\n"
+        "9:00AM - 10:00AM : Subject 1\n"
+        "-> 8:30AM - 10:00AM : Subject 1"
+    )
+    
+    show_tooltip(repetition_check_label, tooltip_message)
+    convert_to_ics(file_path, start_date, end_date, timezone, repetition_check)
 
 root = tk.Tk()
 root.title("WORD TO ICS CONVERTER")
-root.geometry("400x400")
+root.geometry("380x600")
 root.configure(bg="sky blue")
 
 title_label = tk.Label(root, text="WORD TO ICS CONVERTER", font=("Helvetica", 16), bg="sky blue")
@@ -67,6 +99,16 @@ start_date_cal = DateEntry(root, width=12, background='darkblue', foreground='wh
 end_date_label = tk.Label(root, text="End Date:", bg="sky blue")
 end_date_cal = DateEntry(root, width=12, background='darkblue', foreground='white', borderwidth=2)
 end_date_cal.bind("<<DateEntrySelected>>", on_start_date_change)
+
+repetition_var = tk.BooleanVar()
+repetition_check_label = tk.Label(root, text="Repetition Check", bg="sky blue")
+repetition_tooltip_label = tk.Label(root, text="?", font=("Helvetica", 8), bg="grey", fg="white")
+repetition_tooltip_label.bind("<Enter>", lambda e: show_tooltip(repetition_tooltip_label, "8:30AM - 9:00AM : Subject 1\n9:00AM - 10:00AM : Subject 1\n-> 8:30AM - 10:00AM : Subject 1"))
+repetition_check = Checkbutton(root, variable=repetition_var, onvalue=True, offvalue=False, state='disabled')
+repetition_check.grid(row=7, column=1, pady=5, sticky='w', padx=(5, 10), columnspan=2)
+repetition_check_label.grid(row=7, column=0, pady=5, padx=(10, 5), sticky='w')
+repetition_tooltip_label.grid(row=7, column=1, pady=5, sticky='w', padx=(28, 10))
+
 download_button = tk.Button(root, text="Download", command=download_ics)
 
 title_label.grid(row=0, column=0, columnspan=3, pady=(10, 20))
@@ -80,6 +122,23 @@ start_date_label.grid(row=4, column=0, pady=5)
 start_date_cal.grid(row=4, column=1, pady=5)
 end_date_label.grid(row=5, column=0, pady=5)
 end_date_cal.grid(row=5, column=1, pady=5)
-download_button.grid(row=6, column=0, columnspan=3, pady=(20, 10))
+download_button = tk.Button(root, text="Download", command=download_ics)
+
+logs_separator = ttk.Separator(root, orient=tk.HORIZONTAL)
+logs_separator.grid(row=9, column=0, columnspan=3, pady=(10, 5), sticky="ew")
+
+logs_label = tk.Label(root, text="Logs", font=("Helvetica", 14), bg="sky blue")
+logs_text = tk.Text(root, height=10, state='disabled', wrap='word')
+logs_text.grid(row=10, column=0, columnspan=3, padx=10, pady=(0, 10), sticky="nsew")
+logs_label.grid(row=9, column=0, columnspan=3, pady=(0, 10))
+
+logs_scrollbar = tk.Scrollbar(root, command=logs_text.yview)
+logs_scrollbar.grid(row=10, column=3, sticky='nsew')
+logs_text['yscrollcommand'] = logs_scrollbar.set
+
+root.grid_rowconfigure(10, weight=1)
+root.grid_columnconfigure(0, weight=1)
+
+download_button.grid(row=8, column=0, columnspan=3, pady=(20, 10))
 
 root.mainloop()
