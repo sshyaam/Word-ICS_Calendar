@@ -38,5 +38,5 @@ Also Please Make Sure That The Time Range In The Header Field Does Not Contain S
 # Screenshots:
 
 <img width="579" alt="image" src="https://github.com/shyaaaaaaam/Word-ICS_Calendar/assets/66993859/13a13eeb-2948-4986-8d76-b0fbd533cab0">
-<img width="293" alt="image" src="https://github.com/shyaaaaaaam/Word-ICS_Calendar/assets/66993859/e0c08e19-67be-413e-aa3c-1cc0640cc9d7">
+<img width="191" alt="image" src="https://github.com/shyaaaaaaam/Word-ICS_Calendar/assets/66993859/46aa9e64-7871-4bfe-a014-7e4be7c08356">
 <img width="959" alt="image" src="https://github.com/shyaaaaaaam/Word-ICS_Calendar/assets/66993859/1bed5350-2b5b-4e18-b1a3-550b7ae016d2">
