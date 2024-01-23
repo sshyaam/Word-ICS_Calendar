@@ -91,7 +91,7 @@ def calendar_create(timelist, daylist, sd, ed, timezone, repeat):
                 dates = getdate(sd, ed, key)
                 for date in dates:
                     answer +=(f"{date} | {starttime} | {stoptime} | {event} | {timezone}\n")
-                    addevent(date=date, start_time=time[0], end_time=time[1], event_name=event, timezone=timezone)
+                    addevent(date=date, start_time=starttime, end_time=stoptime, event_name=event, timezone=timezone)
             
         return answer
     else:
