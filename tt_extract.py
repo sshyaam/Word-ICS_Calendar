@@ -90,8 +90,11 @@ def calendar_create(timelist, daylist, sd, ed, timezone, repeat):
                 stoptime = split_time(timelist[endindex])[1]
                 dates = getdate(sd, ed, key)
                 for date in dates:
-                    answer +=(f"{date} | {starttime} | {stoptime} | {event} | {timezone}\n")
-                    addevent(date=date, start_time=starttime, end_time=stoptime, event_name=event, timezone=timezone)
+                    if (event == ''):
+                        pass
+                    else:
+                        answer +=(f"{date} | {starttime} | {stoptime} | {event} | {timezone}\n")
+                        addevent(date=date, start_time=starttime, end_time=stoptime, event_name=event, timezone=timezone)
             
         return answer
     else:
